@@ -1,0 +1,24 @@
+{
+    "collectionName": "components_choice_child_twice_prices",
+    "info": {
+        "displayName": "Second Level",
+        "description": ""
+    },
+    "options": {},
+    "attributes": {
+        "text": {
+            "type": "string",
+            "required": true
+        },
+        "is_visible": {
+            "type": "boolean",
+            "default": true
+        },
+        "items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "choice-child.single-price",
+            "required": true
+        }
+    }
+}

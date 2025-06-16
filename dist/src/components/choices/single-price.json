@@ -1,0 +1,25 @@
+{
+    "collectionName": "components_choices_single_prices",
+    "info": {
+        "displayName": "Single Variant",
+        "icon": "command",
+        "description": ""
+    },
+    "options": {},
+    "attributes": {
+        "label": {
+            "type": "string",
+            "default": "Renk",
+            "required": true
+        },
+        "items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "choice-child.single-price"
+        },
+        "is_visible": {
+            "type": "boolean",
+            "default": true
+        }
+    }
+}

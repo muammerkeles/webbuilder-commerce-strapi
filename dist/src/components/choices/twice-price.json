@@ -1,0 +1,30 @@
+{
+    "collectionName": "components_choices_twice_prices",
+    "info": {
+        "displayName": "Double Variant",
+        "description": ""
+    },
+    "options": {},
+    "attributes": {
+        "label1": {
+            "type": "string",
+            "default": "Renk",
+            "required": true
+        },
+        "label2": {
+            "type": "string",
+            "required": true,
+            "default": "Beden"
+        },
+        "items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "choice-child.twice-price",
+            "required": true
+        },
+        "is_visible": {
+            "type": "boolean",
+            "default": true
+        }
+    }
+}

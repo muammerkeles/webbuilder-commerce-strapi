@@ -1,0 +1,44 @@
+{
+    "collectionName": "components_order_order_items",
+    "info": {
+        "displayName": "Order Item",
+        "description": ""
+    },
+    "options": {},
+    "attributes": {
+        "product_documentId": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "stock_quantity": {
+            "type": "integer"
+        },
+        "qty": {
+            "type": "integer",
+            "required": true
+        },
+        "sku_code": {
+            "type": "string",
+            "required": true
+        },
+        "variant_info": {
+            "type": "json"
+        },
+        "unit_price": {
+            "type": "decimal"
+        },
+        "total_price": {
+            "type": "decimal"
+        },
+        "product": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::product.product"
+        },
+        "image_url": {
+            "type": "string"
+        }
+    }
+}

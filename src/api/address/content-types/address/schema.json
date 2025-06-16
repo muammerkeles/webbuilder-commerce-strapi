@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addresses",
+  "info": {
+    "singularName": "address",
+    "pluralName": "addresses",
+    "displayName": "Customer Address",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "address": {
+      "type": "string",
+      "maxLength": 750
+    },
+    "phone": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string",
+      "required": true
+    },
+    "last_name": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "country": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "district": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "application": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::application.application"
+    },
+    "email": {
+      "type": "string"
+    },
+    "address2": {
+      "type": "string"
+    },
+    "domain_name": {
+      "type": "string"
+    }
+  }
+}

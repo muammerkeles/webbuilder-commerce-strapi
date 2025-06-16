@@ -1,0 +1,36 @@
+{
+    "collectionName": "components_perks_simples",
+    "info": {
+        "displayName": "Simple",
+        "icon": "command",
+        "description": ""
+    },
+    "options": {},
+    "attributes": {
+        "is_visible": {
+            "type": "boolean",
+            "default": true
+        },
+        "theme": {
+            "type": "enumeration",
+            "enum": [
+                "none",
+                "dot",
+                "circle",
+                "list",
+                "flex",
+                "rando",
+                "getta",
+                "theme1",
+                "theme2",
+                "theme3"
+            ],
+            "default": "none"
+        },
+        "items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "perk_child.simple"
+        }
+    }
+}

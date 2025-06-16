@@ -1,0 +1,81 @@
+{
+    "kind": "collectionType",
+    "collectionName": "orders",
+    "info": {
+        "singularName": "order",
+        "pluralName": "orders",
+        "displayName": "Order",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "delivery_address": {
+            "type": "json"
+        },
+        "application": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::application.application"
+        },
+        "items": {
+            "displayName": "Order Item",
+            "type": "component",
+            "repeatable": true,
+            "component": "order.order-item"
+        },
+        "user_info": {
+            "type": "json"
+        },
+        "user_documentId": {
+            "type": "string",
+            "maxLength": 100
+        },
+        "contact_number": {
+            "type": "string",
+            "maxLength": 50
+        },
+        "order_status": {
+            "type": "enumeration",
+            "enum": [
+                "onay_bekliyor",
+                "onaylandi",
+                "iptal_edildi",
+                "inceleniyor",
+                "kargoda",
+                "teslim_edildi",
+                "tedarik_ediliyor",
+                "odeme_bekleniyor",
+                "hazirlaniyor",
+                "iade_edildi"
+            ],
+            "default": "onay_bekliyor"
+        },
+        "payment_method": {
+            "type": "enumeration",
+            "enum": [
+                "havale",
+                "eft",
+                "credit_card",
+                "banka_karti",
+                "on_siparis",
+                "kapida_odeme",
+                "on_odemeli",
+                "veresiye",
+                "odemesiz",
+                "other"
+            ],
+            "default": "other"
+        },
+        "total": {
+            "type": "decimal",
+            "default": 0,
+            "required": false
+        },
+        "customer_note": {
+            "type": "text"
+        }
+    }
+}

@@ -1,0 +1,94 @@
+# Creating multi-stage build for production
+FROM node:24-alpine as build
+#RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev
+# Gerekli derleme araçlarını yükle
+#RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev
+
+#ARG NODE_ENV=production
+#ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /opt/
+
+
+COPY . .
+ 
+#RUN npm install -g node-gyp
+RUN apk add --no-cache \
+  python3 \
+  make \
+  g++ \
+  build-base \
+  && npm install --global node-gyp
+
+#COPY .env.prod ./ 
+#####                                                               RUN mv .env.prod .env
+#RUN mv config/env/production/plugins.js config/plugins.js
+RUN npm config set legacy-peer-deps true fetch-retry-maxtimeout 600000 -g
+
+
+#back
+WORKDIR /opt/
+RUN rm -rf node_modules && npm cache clean --force
+
+RUN npm install --legacy-peer-deps
+#RUN npm i file:src/plugins/theme-palette/theme-palette-1.0.0.tgz
+
+
+ENV PATH /opt/node_modules/.bin:$PATH
+
+RUN npm run build:docker
+
+#RUN mkdir -p ../theme-palette
+#RUN mkdir -p src/plugins/theme-palette
+
+ 
+# # # Creating final production image
+FROM node:24-alpine
+RUN apk add --no-cache vips-dev
+#ARG NODE_ENV=production
+#ENV NODE_ENV=${NODE_ENV}
+
+
+WORKDIR /opt
+COPY --from=build /opt/node_modules ./node_modules
+
+
+ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+
+COPY --from=build /opt/public ./public
+COPY --from=build /opt/tsconfig.json ./tsconfig.json
+COPY --from=build /opt/config ./config
+COPY --from=build /opt/package.json ./package.json
+COPY --from=build /opt/package-lock.json ./package-lock.json
+COPY --from=build /opt/.env ./.env
+COPY --from=build /opt/dist ./dist
+COPY --from=build /opt/src/admin ./src/admin
+COPY --from=build /opt/src/api ./src/api
+COPY --from=build /opt/src/components ./src/components
+COPY --from=build /opt/src/extensions ./src/extensions
+COPY --from=build /opt/types ./types
+COPY --from=build /opt/favicon.ico ./favicon.ico
+
+#COPY --from=build /opt/src/plugins/theme-palette/theme-palette-1.0.0.tgz src/plugins/theme-palette/theme-palette-1.0.0.tgz
+
+
+#COPY --from=build /opt/src/plugins/theme-palette/dist src/plugins/theme-palette/dist
+#COPY --from=build /opt/src/plugins/theme-palette/package.json src/plugins/theme-palette/package.json
+#COPY --from=build /opt/src/plugins/theme-palette/package-lock.json src/plugins/theme-palette/package-lock.json
+
+#ENV PATH /opt/app/node_modules/.bin:$PATH
+
+# Security hardening
+
+RUN chmod -R 777 /opt/app
+RUN chmod -R 777 /opt/app/public/uploads
+#RUN chown -R node:node /opt/app && chmod -R 755 /opt/app
+
+#RUN chown -R node:node /opt/app
+#RUN chown -R node:node /opt/app/public/uploads
+
+USER node
+EXPOSE 5051
+CMD ["npm", "run", "start"]

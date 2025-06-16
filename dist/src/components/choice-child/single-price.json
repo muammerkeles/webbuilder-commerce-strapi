@@ -1,0 +1,79 @@
+{
+    "collectionName": "components_choice_child_single_prices",
+    "info": {
+        "displayName": "First Level",
+        "icon": "gift",
+        "description": ""
+    },
+    "options": {},
+    "attributes": {
+        "text": {
+            "type": "string",
+            "required": true
+        },
+        "price": {
+            "type": "decimal",
+            "default": 0,
+            "required": true,
+            "min": 0
+        },
+        "stock_quantity": {
+            "pluginOptions": {
+                "i18n": {
+                    "localized": false
+                }
+            },
+            "type": "integer",
+            "default": 0,
+            "required": true
+        },
+        "is_visible": {
+            "type": "boolean",
+            "default": true
+        },
+        "images": {
+            "type": "media",
+            "multiple": true,
+            "required": false,
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos"
+            ]
+        },
+        "barcode": {
+            "type": "string"
+        },
+        "vat_percent": {
+            "type": "decimal",
+            "min": 0,
+            "default": 0
+        },
+        "sku_code": {
+            "type": "string",
+            "regex": "^[a-zA-Z0-9]{4,16}$",
+            "required": true,
+            "minLength": 3,
+            "maxLength": 16,
+            "unique": true
+        },
+        "vat_included": {
+            "type": "boolean",
+            "default": true,
+            "required": false
+        },
+        "is_discount_percent": {
+            "type": "boolean",
+            "default": false
+        },
+        "discount": {
+            "type": "decimal",
+            "min": 0,
+            "default": 0
+        },
+        "old_price": {
+            "type": "decimal",
+            "default": 0
+        }
+    }
+}
