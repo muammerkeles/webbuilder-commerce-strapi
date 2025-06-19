@@ -42,9 +42,10 @@ export default ({ env }: { env: (key: string, defaultValue?: string) => string }
     },
     upload: {
       config: {
+        sizeLimit: 250 * 1024 * 1024, // 256mb in bytes
         provider: 'local',
         providerOptions: {
-          sizeLimit: 10000000, // 10 MB gibi limit
+          //sizeLimit: 10000000, // 10 MB gibi limit depreceted
         },
       },
     },
