@@ -18,10 +18,10 @@ jobs:
 
     - name: Build Docker Image with custom Dockerfile
       run: |
-        docker build -t herkeseweb-webadmin:latest -f Dockerfile.markahost.prod .
+        docker build -t ecommerce-webadmin:latest -f Dockerfile.markahost.prod .
     - name: Save Docker image to tar
       run: |
-        docker save herkeseweb-webadmin:latest -o herkeseweb-webadmin.tar
+        docker save ecommerce-webadmin:latest -o ecommerce-webadmin.tar
     - name: Upload .tar to VM via SCP
       uses: appleboy/scp-action@v0.1.4
       with:
@@ -29,7 +29,7 @@ jobs:
         username: ${{ secrets.VM_USER }}
         key: ${{ secrets.VM_SSH_KEY }}
         port: 22
-        source: "herkeseweb-webadmin.tar"
+        source: "ecommerce-webadmin.tar"
         target: "/mnt/bigstorage/docker-images/"
     - name: SSH into VM and load + run Docker containers
       uses: appleboy/ssh-action@v1.0.0
@@ -39,13 +39,13 @@ jobs:
         key: ${{ secrets.VM_SSH_KEY }}
         port: 22
         script: |
-          appName=herkeseweb-webadmin
+          appName=ecommerce-webadmin
           dockerImageTarFileName=$appName.tar
           tag=latest
           destinationPathToDockerImageTarFile=/mnt/bigstorage/docker-images/$dockerImageTarFileName
-          appPort=5052
-          firstContainerPort=5052
-          secondContainerPort=50520
+          appPort=5051
+          firstContainerPort=5051
+          secondContainerPort=50510
           networkName=herkesewebnetwork
           echo "## Docker Image yükleniyor..."
           sudo docker load -i "$destinationPathToDockerImageTarFile"
@@ -62,7 +62,7 @@ jobs:
             -p $firstContainerPort:$appPort \
             -e HOST=0.0.0.0 \
             -e PORT=$appPort \
-            -v /mnt/bigstorage/webadmin/uploads:/opt/app/public/uploads \
+            -v /mnt/bigstorage/ecommerce/uploads:/opt/app/public/uploads \
             --network "$networkName" \
             --memory="1g" \
             --cpus=".5" \
@@ -81,7 +81,7 @@ jobs:
             -p $secondContainerPort:$appPort \
             -e HOST=0.0.0.0 \
             -e PORT=$appPort \
-            -v /mnt/bigstorage/webadmin/uploads:/opt/app/public/uploads \
+            -v /mnt/bigstorage/ecommerce/uploads:/opt/app/public/uploads \
             --network "$networkName" \
             --memory="1g" \
             --cpus=".5" \
