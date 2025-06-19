@@ -5,5 +5,16 @@ build/
 node_modules/
 data/
 backup/
+*.bats
 *.bat
 *.tar
+**/node_modules
+**/dist
+.strapi
+build
+/src/plugins/theme-palette/node_modules
+/src/plugins/theme-palette/dist
+#/src/plugins/*
+# - !/src/plugins/theme-palette/*.bat
+!/src/plugins/theme-palette/*.tgz
+# - !/src/plugins/theme-palette/package*.json

@@ -42,15 +42,9 @@ export default ({ env }: { env: (key: string, defaultValue?: string) => string }
     },
     upload: {
       config: {
-        provider: "strapi-provider-upload-azure-storage",
+        provider: 'local',
         providerOptions: {
-          authType: env("STORAGE_AUTH_TYPE", "default"),
-          account: env("STORAGE_ACCOUNT"),
-          accountKey: env("STORAGE_ACCOUNT_KEY"),
-          serviceBaseURL: env("STORAGE_URL"), // optional
-          containerName: env("STORAGE_CONTAINER_NAME"),
-          defaultPath: "assets",
-          cdnBaseURL: env("STORAGE_CDN_URL"), // optional
+          sizeLimit: 10000000, // 10 MB gibi limit
         },
       },
     },
