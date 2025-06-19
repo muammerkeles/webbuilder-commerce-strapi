@@ -50,6 +50,13 @@ jobs:
           echo "## Docker Image yükleniyor..."
           sudo docker load -i "$destinationPathToDockerImageTarFile"
           echo "### Yüklendi."
+
+          echo "### Upload klasörü izinleri ayarlanıyor..."
+          sudo mkdir -p /mnt/bigstorage/ecommerce/uploads
+          sudo chown -R 1000:1000 /mnt/bigstorage/ecommerce/uploads
+          sudo chmod -R 755 /mnt/bigstorage/ecommerce/uploads
+          echo "### İzinler verildi."
+
           echo "### 1. Container ($appName) durduruluyor..."
           sudo docker rm -f "$appName" || true
           echo "### Silindi."
