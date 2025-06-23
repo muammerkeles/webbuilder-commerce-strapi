@@ -48,50 +48,51 @@ jobs:
           secondContainerPort=50510
           networkName=herkesewebnetwork
           echo "## Docker Image yükleniyor..."
-          sudo docker load -i "$destinationPathToDockerImageTarFile"
+          sudo docker load -i $destinationPathToDockerImageTarFile
           echo "### Yüklendi."
 
-          echo "### Upload klasörü izinleri ayarlanıyor..."
+          echo "### Upload klasörü izinleri ayarlaniyor..."
           sudo mkdir -p /mnt/bigstorage/ecommerce/uploads
           sudo chown -R 1000:1000 /mnt/bigstorage/ecommerce/uploads
           sudo chmod -R 755 /mnt/bigstorage/ecommerce/uploads
           echo "### İzinler verildi."
 
           echo "### 1. Container ($appName) durduruluyor..."
-          sudo docker rm -f "$appName" || true
+          sudo docker rm -f $appName || true
           echo "### Silindi."
           echo "## Docker Image ve Volume Listesi:"
           sudo docker ps
           sudo docker volume ls
           echo "## 1. container tekrar başlatiliyor..."
           sudo docker run -d \
-            --name "$appName" \
+            --name $appName \
             -p $firstContainerPort:$appPort \
             -e HOST=0.0.0.0 \
             -e PORT=$appPort \
             -v /mnt/bigstorage/ecommerce/uploads:/opt/app/public/uploads \
-            --network "$networkName" \
-            --memory="1g" \
-            --cpus=".5" \
+            --network $networkName \
+            --memory=1g \
+            --cpus=.5 \
             --restart always \
-            "$appName:$tag"
-          echo "### 1. container çalışıyor."
+            $appName:$tag
+          echo "### 1. container tamam."
+
           echo "### 2. Container ($appName-2) durduruluyor..."
-          sudo docker rm -f "$appName-2" || true
+          sudo docker rm -f $appName-2 || true
           echo "### Silindi."
           echo "## Docker Image ve Volume Listesi:"
           sudo docker ps
           sudo docker volume ls
           echo "## 2. container başlatılıyor..."
           sudo docker run -d \
-            --name "$appName-2" \
+            --name $appName-2 \
             -p $secondContainerPort:$appPort \
             -e HOST=0.0.0.0 \
             -e PORT=$appPort \
             -v /mnt/bigstorage/ecommerce/uploads:/opt/app/public/uploads \
-            --network "$networkName" \
-            --memory="1g" \
-            --cpus=".5" \
+            --network $networkName \
+            --memory=1g \
+            --cpus=.5 \
             --restart always \
-            "$appName:$tag"
+            $appName:$tag
           echo "### 2. container çalışıyor."
