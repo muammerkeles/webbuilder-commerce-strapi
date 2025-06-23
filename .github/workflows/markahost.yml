@@ -40,7 +40,7 @@ jobs:
         port: 22
         script: |
           appName=ecommerce-webadmin
-          dockerImageTarFileName=$appName.tar
+          dockerImageTarFileName=ecommerce-webadmin.tar
           tag=latest
           destinationPathToDockerImageTarFile=/mnt/bigstorage/docker-images/$dockerImageTarFileName
           appPort=5051
